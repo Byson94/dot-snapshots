@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+NOTIFICATION_FILE="$HOME/.local/share/oris/notifications.json"
+
+mkdir -p "$(dirname "$NOTIFICATION_FILE")"
+touch "$NOTIFICATION_FILE"
+
+if [ ! -s "$NOTIFICATION_FILE" ]; then
+  exit 0
+fi
+
+mapfile -t notifications < "$NOTIFICATION_FILE"
+
+notif_args=()
+
+for json in "${notifications[@]}"; do
+    timestamp=$(jq -r '.timestamp' <<<"$json")
+    summary=$(jq -r '.summary' <<<"$json")
+    body=$(jq -r '.body' <<<"$json")
+    id=$(jq -r '.id' <<<"$json")
+
+    [[ -z "$id" || "$id" == "null" ]] && continue
+
+    notif_args+=("$timestamp" "$summary" "$body" "$id")
+done
+
+if [[ ${#notif_args[@]} -gt 0 ]]; then
+    scripts/add_notif_to_ui -m "${notif_args[@]}"
+fi

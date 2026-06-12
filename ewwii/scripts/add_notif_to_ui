@@ -1,0 +1,94 @@
+#!/bin/bash
+
+set -euo pipefail
+
+MODE=""
+IS_APPEND="false"
+notifications=()
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -s|--single)
+            MODE="single"
+            if [[ $# -lt 5 ]]; then
+                echo "Error: -s requires 4 arguments (timestamp summary body id)"
+                exit 1
+            fi
+            notifications+=("$2|$3|$4|$5")
+            shift 5
+            ;;
+        -m|--map)
+            MODE="map"
+            shift
+            while [[ $# -ge 4 && "$1" != -* ]]; do
+                notifications+=("$1|$2|$3|$4")
+                shift 4
+            done
+            ;;
+        -a|--append)
+            IS_APPEND="true"
+            shift
+            ;;
+        *)
+            echo "Unknown argument: $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
+if [[ ${#notifications[@]} -eq 0 ]]; then
+    echo "No notifications provided. Use -s <timestamp summary body id> or -m <multiple groups>."
+    exit 1
+fi
+
+widgets=()
+
+for entry in "${notifications[@]}"; do
+    IFS='|' read -r timestamp summary body id <<< "$entry"
+    [[ -z "$id" ]] && continue
+
+    SAFE_SUMMARY=$(printf '%s' "$summary" | sed 's/"/\\"/g')
+    SAFE_BODY=$(printf '%s' "$body" | sed 's/"/\\"/g')
+    WIDGET_ID="EWWII_NOTIF_${id//[^[:alnum:]_-]/}"
+
+    widget=$(cat <<EOF
+box(#{ 
+    widget_name: "$WIDGET_ID", 
+    dyn_id: "$WIDGET_ID",
+    class: "notif-item",
+    space_evenly: false,
+    spacing: 10,
+}, [
+    scroll(#{ vscroll: false, hexpand: true }, [
+        box(#{ 
+            halign: "start", 
+            orientation: "v", 
+            space_evenly: false,
+            spacing: 2
+        }, [
+            label(#{ 
+                text: "$SAFE_SUMMARY", 
+                halign: "start",
+                class: "notif-summary"
+            }),
+            label(#{ 
+                text: "$SAFE_BODY", 
+                halign: "start",
+                class: "notif-body"
+            }),
+        ])
+    ]),
+    button(#{ 
+        label: "Remove", 
+        halign: "end",
+        onclick: "scripts/remove_notification '$WIDGET_ID' '$id'",
+        timeout: "5s"
+    })
+])
+EOF
+)
+    widgets+=("$widget")
+done
+
+ewwii wc create "${widgets[@]}" --parent "all_notifications" --config .
+ewwii update SELECTED_NOTIF_PAGE=1 --config .

@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+# Get location
+read lat lon <<< $(curl -s https://ipwho.is/ | jq -r '.latitude, .longitude' | tr '\n' ' ')
+
+# Get current weather data
+data=$(curl -s "https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current_weather=true")
+
+temp=$(jq -r '.current_weather.temperature' <<< "$data")
+code=$(jq -r '.current_weather.weathercode' <<< "$data")
+
+# Convert weather code to human redable format
+case $code in
+  0)
+    weather="clear sky"
+    message="Bright and sunny. Enjoy it!"
+    ;;
+  1)
+    weather="mostly clear"
+    message="Mostly clear skies. Feels nice out."
+    ;;
+  2)
+    weather="partly cloudy"
+    message="A few clouds, still pleasant."
+    ;;
+  3)
+    weather="overcast"
+    message="Gray skies. Maybe take it slow."
+    ;;
+  45|48)
+    weather="foggy"
+    message="Foggy out. Go easy on the road."
+    ;;
+  51|53|55)
+    weather="drizzle"
+    message="Light rain. Keep an umbrella handy."
+    ;;
+  56|57)
+    weather="freezing drizzle"
+    message="Cold drizzle. Roads may be slick."
+    ;;
+  61|63|65)
+    weather="rainy"
+    message="Raining steadily. Perfect for tea."
+    ;;
+  66|67)
+    weather="freezing rain"
+    message="Freezing rain. Watch for ice!"
+    ;;
+  71|73|75)
+    weather="snowy"
+    message="Snowfall today. Stay warm out there."
+    ;;
+  77)
+    weather="snow grains"
+    message="Tiny snow grains falling. Dress warmly."
+    ;;
+  80)
+    weather="light rain showers"
+    message="Scattered light showers. May pass soon."
+    ;;
+  81)
+    weather="moderate rain showers"
+    message="Off-and-on rain showers. Take a jacket."
+    ;;
+  82)
+    weather="heavy rain showers"
+    message="Heavy rain bursts. Best to stay dry inside."
+    ;;
+  85)
+    weather="light snow showers"
+    message="Light snow showers drifting by."
+    ;;
+  86)
+    weather="heavy snow showers"
+    message="Heavy snow showers. Bundle up tight."
+    ;;
+  95)
+    weather="thunderstorm"
+    message="Thunder rumbling. Stay indoors."
+    ;;
+  96|99)
+    weather="thunderstorm with hail"
+    message="Storm with hail. Take shelter!"
+    ;;
+  *)
+    weather="unknown"
+    message="Can't read the weather right now."
+    temp="0"
+    ;;
+esac
+
+# Output JSON
+ewwii wc property-update --widget "weather-and-temperature" label="󰖐  ${weather} |   ${temp}" -c .
+ewwii wc property-update --widget "weather-message" label="${message}" -c .

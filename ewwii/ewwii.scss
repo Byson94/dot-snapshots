@@ -1,0 +1,387 @@
+// colors
+$background-color: #0C0F16;
+$background-color-trans: #0C0F1680;
+$background-color-secondary: #3F4247;
+$highlight: #ADA092;
+$dark-calendar-text: #e3e1e9;
+$dark-calendar-highlight: #e5bad8;
+$bar-margin: 5px;
+
+// remove all gtk theme css
+* {
+  all: unset;
+  font-family: "Cantarell", sans-serif;
+}
+
+// == Top bar styles == //
+.top-bar {
+  border-radius: 10px;
+  background: $background-color-trans;
+  margin: $bar-margin;
+  border: 2px soild $highlight;
+  backdrop-filter: blur(40px);
+}
+
+// == Left side == //
+.workspace {
+  background: $background-color;
+  border: 2px solid $highlight;
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+.workspace button:hover {
+  color: $highlight;
+}
+
+.sidebar-revealer {
+  background: $background-color;
+  border: 2px solid $highlight;
+  border-radius: 20px;
+  padding: 4px 8px;
+  padding-right: 12px;
+  color: #ffffff;
+
+  &:hover {
+    color: darken(#ffffff, 15%);
+  }
+}
+
+// == Center == //
+.search-btn {
+  background: $background-color;
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  padding: 6px 20px;
+  margin-right: 16px;
+  border-radius: 6px;
+  border: 2px solid $highlight;
+}
+
+// == Right side == //
+.time-wdgt {
+  background: $background-color;
+  border: 2px solid $highlight;
+  border-radius: 20px;
+  padding: 6px 10px;
+}
+
+.power-wdgt {
+  background: $background-color;
+  border: 2px solid $highlight;
+  border-radius: 20px;
+  color: $highlight;
+  padding: 4px 8px;
+  padding-right: 10px;
+  font-size: 15px;
+
+  &:hover {
+    color: darken($highlight, 15%);
+  }
+}
+
+// == Powermenu styles == //
+.power-menu {
+  border: 2px solid $highlight;
+  background: transparent;
+  padding: 10px;
+  animation: SlideInBottom 0.2s ease-out forwards;
+}
+
+.power-menu-content-box {
+  background: $background-color;
+  border-radius: 10px;
+}
+.power-menu button {
+  background: $background-color;
+  color: white;
+  padding: 6px;
+  font-size: 15px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  border: 0.5px solid $highlight;
+
+  &:hover {
+    color: $highlight;
+    border-color: $highlight;
+  }
+}
+
+.power-menu .shutdown-btn {
+  color: $highlight;
+  border: 1px solid $highlight;
+
+  &:hover {
+    background: $highlight;
+    color: black;
+  }
+}
+
+.bottom-dock {
+  border-radius: 10px;
+  border: 0.1px solid white;
+}
+
+// == sidebar styles == //
+.sidebar-content-box {
+  background: $background-color;
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid $highlight;
+  animation: SlideInBottom 0.2s ease-out forwards;
+}
+
+.sidebar-content-box button {
+  padding: 6px;
+}
+
+.sidebar-content-box .cal-box {
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  border: 0.5px solid $highlight;
+
+  &:hover {
+    color: $highlight;
+    border-color: $highlight;
+  }
+}
+
+.sidebar-text-box {
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  border: 0.5px solid $highlight;
+}
+
+.metric scale trough highlight {
+  background-color: $highlight;
+  color: #000000;
+  border-radius: 10px;
+}
+
+.metric scale trough {
+  background-color: #4e4e4e;
+  border-radius: 50px;
+  min-height: 10px;
+  min-width: 90px;
+  margin: 5px;
+}
+
+// == Time styles == //
+.time {
+  font-size: 100px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: rgba($background-color, 15%);
+  border: 2px solid rgba($highlight, 15%);
+  margin-bottom: 38px;
+}
+
+// == calendar styles == //
+.calendar {
+  color: $dark-calendar-text;
+  background-color: $background-color;
+  border-radius: 10px;
+  animation: SlideInRight 0.2s ease-out forwards;
+}
+
+.calendar-in {
+  color: #bfc9db;
+  border: 2px solid $highlight;
+  border-radius: 10px;
+}
+
+calendar {
+  color: $dark-calendar-text;
+  padding: 5px;
+}
+
+calendar > grid > label.day-number:selected {
+  color: $dark-calendar-highlight;
+  font-weight: bold;
+}
+
+calendar > grid > label {
+  color: #ccc;
+}
+
+calendar > grid > label.day-number {
+  color: $dark-calendar-text;
+}
+
+calendar > header {
+  color: #a1bdce;
+  font-weight: bold;
+}
+
+calendar > button {
+  color: #afbea2;
+}
+
+calendar:indeterminate {
+  color: #bfc9db;
+}
+
+// == Application menu == //
+.app-menu-searchbar, .app-menu-content {
+  background: $background-color;
+  padding: 10px;
+  border-radius: 15px;
+  border: 2px solid $highlight;
+  animation: FadeIn 0.2s linear forwards;
+}
+
+.app-menu-searchbar entry selection {
+  background-color: lighten($background-color, 10%);
+}
+
+.app-menu-content {
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.app-menu-list-item {
+  background-color: lighten($background-color, 15%);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px 0px;
+}
+
+.app-menu-list-item:hover {
+  background-color: lighten($background-color, 10%);
+}
+
+flowboxchild:selected > .app-menu-list-item {
+  background-color: lighten($background-color, 5%);
+}
+
+// OSD (on screen display)
+.volosd {
+  background-color: $background-color;
+  border: 2px solid $highlight;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  animation: FadeIn 0.2s linear forwards;
+}
+
+// == Scrollbar styling == //
+scrollbar > range > trough { 
+  margin: 9px; 
+  transition: all 200ms linear; 
+  border-radius: 99px; 
+}
+
+scrollbar > range > trough > slider { 
+  min-width: 4px; min-height: 4px; 
+  margin: -8px; 
+  border: 8px solid transparent; 
+  border-radius: 99px; 
+  background-clip: padding-box; 
+  transition: all 200ms linear; 
+  background-color: color-mix(in srgb, $highlight 20%, $background-color-secondary); 
+}
+
+scrollbar > range > trough > slider:hover { 
+  background-color: color-mix(in srgb, $highlight 40%, $background-color-secondary); 
+}
+
+scrollbar > range > trough > slider:active { 
+  background-color: color-mix(in srgb, $highlight 60%, $background-color-secondary); 
+}
+
+scrollbar > range > trough > slider:disabled { 
+  opacity: 0; 
+}
+
+scrollbar.vertical > range > trough > slider {
+    transform: translateX(10px);
+}
+
+scrollbar.horizontal > range > trough > slider {
+    transform: translateY(10px);
+}
+
+// == Animations == //
+.do-fade-out {
+  animation: FadeOut 0.1s linear forwards;
+}
+
+.do-slide-out-up {
+  animation: SlideOutTop 0.2s linear forwards;
+}
+
+.do-slide-out-left {
+  animation: SlideOutLeft 0.2s linear forwards;
+}
+
+@keyframes SlideInBottom {
+  0% {
+    transform: translateY(-200px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes SlideOutTop {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+}
+
+@keyframes SlideInRight {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes SlideOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+}
+
+@keyframes FadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes FadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

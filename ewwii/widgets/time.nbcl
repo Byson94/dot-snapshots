@@ -1,0 +1,21 @@
+component RenderTime () {
+  Box {
+    halign = "center"
+
+    Label { text = global("standard_time") }
+  }
+}
+
+Poll "standard_time" {
+  initial = "00:00"
+  cmd = "date '+%H:%M';"
+  interval = "1m"
+}
+
+Window "time" {
+  geometry = { anchor = "center" }
+  stacking = "bg"
+  monitor = 0
+
+  RenderTime {}
+}
