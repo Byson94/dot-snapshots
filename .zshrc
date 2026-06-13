@@ -19,11 +19,17 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-bindkey '^[[A' history-beginning-search-backward
-bindkey '^[[B' history-beginning-search-forward
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
+bindkey '^[[A' history-beginning-search-backward-end
+bindkey '^[[B' history-beginning-search-forward-end
 
 # Aliases
 alias clear="printf '\033[2J\033[3J\033[1;1H'"
+alias gp="git push"
+alias gpf="git push --force-with-lease"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
