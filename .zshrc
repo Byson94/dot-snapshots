@@ -11,6 +11,7 @@ ZSH_THEME=""
 source $HOME/.powerlevel10k/powerlevel10k.zsh-theme
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # User configuration
 
@@ -19,12 +20,14 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
+HISTORY_SUBSTRING_SEARCH_PREFIXED=1
+
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 
-bindkey '^[[A' history-beginning-search-backward-end
-bindkey '^[[B' history-beginning-search-forward-end
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 bindkey '^[[H' beginning-of-line
 bindkey '[1~' beginning-of-line
