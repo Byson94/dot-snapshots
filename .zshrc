@@ -26,6 +26,12 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey '^[[A' history-beginning-search-backward-end
 bindkey '^[[B' history-beginning-search-forward-end
 
+bindkey '^[[H' beginning-of-line
+bindkey '[1~' beginning-of-line
+
+bindkey '^[[F' end-of-line
+bindkey '[4~' end-of-line
+
 # Aliases
 alias clear="printf '\033[2J\033[3J\033[1;1H'"
 alias gp="git push"
