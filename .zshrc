@@ -1,31 +1,34 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# == P10K Sourcing == 
+# Must put it near the top
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
-ZSH_THEME=""
-
-# Sourcing
-source $HOME/.powerlevel10k/powerlevel10k.zsh-theme
-
-# OMZ
+# == OMZ ==
 export ZSH="/home/byson94/.oh-my-zsh"
+ZSH_THEME="bira"
+
+# Performance opts
+DISABLE_AUTO_UPDATE="true"
+DISABLE_COMPFIX="true"
+DISABLE_MAGIC_FUNCTIONS="true"
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 plugins=(
   git
-  zsh-syntax-highlighting
   zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
 
+# Sourcing
+# source $HOME/.powerlevel10k/powerlevel10k.zsh-theme
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 # Aliases
 alias clear="printf '\033[2J\033[3J\033[1;1H'"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # clearing autosuggestions on paste
 # it is important as it would not consider `paste` as an input
@@ -49,4 +52,3 @@ nvm()  { lazy_nvm; command nvm "$@"; }
 node() { lazy_nvm; command node "$@"; }
 npm()  { lazy_nvm; command npm "$@"; }
 npx()  { lazy_nvm; command npx "$@"; }
-
