@@ -15,10 +15,15 @@ source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring
 
 # User configuration
 
-HISTFILE=~/.zsh_history
+HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
-setopt appendhistory
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt share_history
 
 HISTORY_SUBSTRING_SEARCH_PREFIXED=1
 
@@ -34,6 +39,27 @@ bindkey '[1~' beginning-of-line
 
 bindkey '^[[F' end-of-line
 bindkey '[4~' end-of-line
+
+function cstm_history {
+  local clear list
+  zparseopts -E c=clear l=list
+
+  if [[ -n "$clear" ]]; then
+    print -nu2 "This will delete your entire shell history. Are you sure? [y/N] "
+    builtin read -E
+    if [[ "$REPLY" = [yY] ]]; then
+      print -nu2 >| "$HISTFILE"
+      fc -p "$HISTFILE"
+      print -u2 "History file deleted."
+    fi
+  elif [[ -n "$list" ]]; then
+    builtin fc "$@"
+  else
+    builtin fc -l "$@" 1
+  fi
+}
+
+alias history='cstm_history'
 
 # Aliases
 alias clear="printf '\033[2J\033[3J\033[1;1H'"
@@ -65,3 +91,4 @@ nvm()  { lazy_nvm; command nvm "$@"; }
 node() { lazy_nvm; command node "$@"; }
 npm()  { lazy_nvm; command npm "$@"; }
 npx()  { lazy_nvm; command npx "$@"; }
+
