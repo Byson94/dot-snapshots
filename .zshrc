@@ -6,7 +6,7 @@
 
 # == OMZ ==
 export ZSH="/home/byson94/.oh-my-zsh"
-ZSH_THEME="bira"
+ZSH_THEME="refined"
 
 # Performance opts
 DISABLE_AUTO_UPDATE="true"
